@@ -1,1 +1,9 @@
 {"level":"\u001b[32minfo\u001b[39m","message":"{\"method\":\"POST\",\"url\":\"/add\",\"status\":\"201\",\"responseTime\":\"6.204\"}","timestamp":"2024-07-23T05:25:04.811Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"get products list","timestamp":"2024-07-23T05:51:11.038Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"{\"method\":\"GET\",\"url\":\"/\",\"status\":\"200\",\"responseTime\":\"11.832\"}","timestamp":"2024-07-23T05:51:11.050Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"get products list","timestamp":"2024-07-23T05:51:29.405Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"{\"method\":\"GET\",\"url\":\"/\",\"status\":\"200\",\"responseTime\":\"3.566\"}","timestamp":"2024-07-23T05:51:29.409Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"get products list","timestamp":"2024-07-23T05:51:35.238Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"{\"method\":\"GET\",\"url\":\"/\",\"status\":\"200\",\"responseTime\":\"1.321\"}","timestamp":"2024-07-23T05:51:35.240Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"get products list","timestamp":"2024-07-23T09:52:35.784Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"{\"method\":\"GET\",\"url\":\"/\",\"status\":\"200\",\"responseTime\":\"1.627\"}","timestamp":"2024-07-23T09:52:35.786Z"}

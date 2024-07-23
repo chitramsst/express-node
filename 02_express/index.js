@@ -44,6 +44,7 @@ app.post("/add",(req,res)=>{
 
 /* List the product */
 app.get("/",(req,res)=>{
+  logger.info("get products list")
     res.send (productList)
 })
 
