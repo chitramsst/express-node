@@ -1,0 +1,77 @@
+Elysia js
+
+Hono js
+
+Exp
+
+
+* npm int
+
+this will create packgae.json file 
+this is the entry point
+here main shows index.js
+
+two types of js
+
+type = module => you can use import
+otherwise commonjs  => you can use require
+
+"scripts": {
+    "dev": "node index.js"
+  },
+
+npm run start
+
+
+https://expressjs.com/en/starter/installing.html
+
+npm install express
+
+
+index.js (test)
+
+import express from 'express'
+
+const app = express()
+
+const port = 3000
+
+app.get("/",(req,res)=>{
+    res.send ("hai babe")
+})
+app.listen(port,()=>{
+    console.log(`server running on port:  ${port}... `)
+})
+
+
+
+if you have any changes in server, it automatically restart the server 
+
+nodeman
+
+npm i -D nodemon
+(only for development purpose)
+
+https://www.npmjs.com/package/dotenv
+
+
+
+https://expressjs.com/en/starter/installing.html
+
+Postman : collection creation under workbase
+
+(you can create variable for production version also,
+use the variable under the collection heading 
+)
+
+_______________________________________________________________
+
+https://docs.chaicode.com/
+
+for logger and morgen
+
+https://docs.chaicode.com/advance-node-logger/
+
+https://www.youtube.com/watch?v=vzyzjqy1I5k&list=PLRAV69dS1uWSl459HU5liKv8q4iZ44xBq&index=8
+________________________________________________________________
+
