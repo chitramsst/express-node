@@ -19,4 +19,8 @@ import healthcheckRouter from './routes/healthcheck.routes.js'
 
 // routes
 app.use('/api/v1/healthcheck', healthcheckRouter)
+
+import basicRouter from './routes/user.routes.js'
+
+app.use('/api/v1/',basicRouter)
 export { app }
