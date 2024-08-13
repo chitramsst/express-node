@@ -1,40 +1,50 @@
 import Realm from "realm";
 import { app } from "../db/index.js";
 
-
-// Define your schemas
-const UserSchema = {
-    name: "User",
-    properties: {
-        _id: "objectId",
-        name: "string",
+class User extends Realm.Object {
+    static schema = {
+        name: "User",
+        primaryKey: "_id",
+        properties: {
+            _id: { type: "objectId", default: () => new Realm.BSON.ObjectId() },
+            name: "string",
         email: "string",
         age: "int?",
-    },
-    primaryKey: "_id",
-};
+        },
+    };
+}
+
 
 // Function to open a Realm instance with Flexible Sync
 const openRealm = async () => {
     try {
         const user = app.currentUser;
+        console.log("user" + user)
         if (!user) {
             throw new Error("User is not authenticated");
         }
 
         const config = {
-            schema: [UserSchema],
+            schema: [User],
             sync: {
                 user,
                 flexible: true, // Enable Flexible Sync
+                onSessionStateChange: (session) => {
+                    console.log('Sync session state:', session.state);
+                    if (session.state === 'invalid') {
+                        console.error('Sync session became invalid.');
+                        // Handle invalid session (e.g., retry connection)
+                    }
+                    console.error('Sync session became valid.');
+                }
             },
         };
 
         const realm = await Realm.open(config);
-
+        console.log('Realm opened successfully');
         // Ensure the subscription is created
-        realm.subscriptions.update((subs) => {
-            subs.add(realm.objects("User"));
+        await realm.subscriptions.update((subs) => {
+            subs.add(realm.objects(User));
         });
 
         return realm;
@@ -54,7 +64,7 @@ const createUser = async (userData) => {
 
         // Use a write transaction to create a new user
         realm.write(() => {
-            realm.create("User", userData);
+            realm.create(User, userData);
         });
 
         console.log("User created successfully");
@@ -70,20 +80,20 @@ const createUser = async (userData) => {
 };
 
 const getAllUsers = async () => {
-    let realm;
+    let realm, usersArray;
     try {
         realm = await openRealm();
         const users = realm.objects("User");
 
         // Convert the results to a plain JavaScript array
-        const usersArray = users.map(user => ({
+        usersArray = users.map(user => ({
             _id: user._id.toString(), // Convert ObjectId to string for easier handling
             name: user.name,
             email: user.email,
             age: user.age,
         }));
+        console.log(usersArray);
 
-        return usersArray;
     } catch (error) {
         console.error("Error fetching users:", error);
         throw error; // Propagate the error to the caller
@@ -92,10 +102,28 @@ const getAllUsers = async () => {
         if (realm) {
             realm.close();
         }
+
+        return usersArray;
     }
 };
+
+const emptyUsersCollection = async () => {
+    let realm;
+    try {
+        realm = await openRealm();
+        realm.write(() => {
+            const allUsers = realm.objects('User');
+            realm.delete(allUsers); // This deletes all User objects in the collection
+        });
+        console.log("All users have been deleted from the collection.");
+    } catch (error) {
+        console.error("Error emptying the users collection:", error);
+    }
+};
+
 // Export operations
 export {
     createUser,
-    getAllUsers
+    getAllUsers,
+    emptyUsersCollection
 };

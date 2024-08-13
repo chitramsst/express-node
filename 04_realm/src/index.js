@@ -1,8 +1,21 @@
 
+// Global handlers for unhandled promise rejections and uncaught exceptions
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    // Optionally exit the process if needed
+    // process.exit(1);
+});
+
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception thrown:', error);
+    // Optionally exit the process if needed
+    // process.exit(1);
+});
+
 import {app} from './app.js'
 import dotenv from 'dotenv'
 import ConnectDB from './db/index.js'
-import { createUser, getAllUsers } from "./controllers/user.controller.js";
+import { createUser, getAllUsers, emptyUsersCollection } from "./controllers/user.controller.js";
 import { registerUser, loginUser } from './db/userAuth.js';
 import Realm from 'realm';
 
@@ -25,11 +38,11 @@ ConnectDB()
                 email: "jane.doe@example.com",
                 age: 28,
             };
-
+           // await emptyUsersCollection();
             await createUser(newUser);
             console.log("User created successfully");
 
-//            handleGetAllUsers();
+           handleGetAllUsers();
         } catch (err) {
             console.error("Error in operations:", err);
         }
@@ -45,6 +58,7 @@ ConnectDB()
 
     const handleGetAllUsers = async () => {
         try {
+           
             const users = await getAllUsers();
             console.log("Users:", users);
         } catch (error) {
