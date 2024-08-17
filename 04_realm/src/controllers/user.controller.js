@@ -19,7 +19,6 @@ class User extends Realm.Object {
 const openRealm = async () => {
     try {
         const user = app.currentUser;
-        console.log("user" + user)
         if (!user) {
             throw new Error("User is not authenticated");
         }
@@ -33,7 +32,6 @@ const openRealm = async () => {
                     console.log('Sync session state:', session.state);
                     if (session.state === 'invalid') {
                         console.error('Sync session became invalid.');
-                        // Handle invalid session (e.g., retry connection)
                     }
                     console.error('Sync session became valid.');
                 }
@@ -41,7 +39,6 @@ const openRealm = async () => {
         };
 
         const realm = await Realm.open(config);
-        console.log('Realm opened successfully');
         // Ensure the subscription is created
         await realm.subscriptions.update((subs) => {
             subs.add(realm.objects(User));
@@ -66,8 +63,6 @@ const createUser = async (userData) => {
         realm.write(() => {
             realm.create(User, userData);
         });
-
-        console.log("User created successfully");
     } catch (error) {
         console.error("Error creating user:", error);
         throw error; // Propagate the error to the caller
@@ -92,8 +87,6 @@ const getAllUsers = async () => {
             email: user.email,
             age: user.age,
         }));
-        console.log(usersArray);
-
     } catch (error) {
         console.error("Error fetching users:", error);
         throw error; // Propagate the error to the caller
